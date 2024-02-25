@@ -19,8 +19,13 @@ class EmailServiceTest {
     }
 
     @Test
-    @DisplayName("HMLT 본문 및 이미지 첨부")
     void mailToHTML() {
+        emailService.mailSendToHTML();
+    }
+
+    @Test
+    @DisplayName("HTML 본문 및 이미지 첨부")
+    void mailToHTMLAddFile() {
         emailService.mailSendToHTMLAddFile();
     }
 }
