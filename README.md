@@ -94,3 +94,54 @@
   }
     ```
   
+
+---
+
+## HTML 임배디드 내 이미지 추가
+- 방법
+  - InLine 방식을 통한 파일 첨부 : 해당 방법을 지원해 주지 않는 메일 서비스가 있음 [비추천]
+  - CID를 통한 메일 첨부
+  - 외부 접근이 가능한 서버를 사용하여 이미지를 불러오는 방식
+- 테스트는 로컬 환경에서 진행하므로 CID 방식을 설명함
+  - 주의 사항
+    - HTML 요소를 만든 후 파일을 주입해야 정상적으로 이미지가 cid경로애 들어가 있다!! 
+      - 그렇지 않을 경우 attach(0).txt 파일 형태로 파일이 첨부되어 있고 이미지는 엑박 상태임
+    - `addInLine()`에 넣어주는 키 값을 꼭 `cid`명칭 과 맞추자'
+      - `"<img src='cid:logo'>"`  ----> `helper.addInline("logo", image);`
+- 예시 코드
+  ```java
+  class MailTest{
+    public void mailSendToHTMLAddCid(){
+        try {
+            MimeMessage mimeMessage = javaMailSender.createMimeMessage();
+            MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, true, "UTF-8"); // multipart 모드 활성화
+
+            helper.setTo("edel1212@naver.com");
+            helper.setSubject("흑곰님입니다.");
+
+            // HTML 콘텐츠를 문자열로 작성
+            String htmlContent = "<img src='cid:logo'>"; // 이미지를 참조하는 HTML 태그
+
+            helper.setText(htmlContent, true); // true를 설정하여 HTML 메일로 인식하게 함
+
+
+            /**************************/
+            /***  🔥 초 삽질했었음 ...  */
+            // setText()를 통해 먼저 선행으로 Dom요소를 만든 후 cid를 추가
+            // 파일 추가 순서로 가야지 진행됬었음
+            // 이미지 파일 첨부를 그 윗 단계  String htmlContent = "<img src='cid:logo'>"; 이전 에서
+            // 진행 하여 이미지 첨부가 안되고 첨부파일 내 attachg(0).txt 만들어가는 이슈가 있었다 ..
+            /**************************/
+
+            // 이미지 파일을 첨부  !!!! ⭐ 순서 초 중요!!!
+            ClassPathResource image = new ClassPathResource("static/img/test.jpg");
+            helper.addInline("logo", image);
+
+            javaMailSender.send(mimeMessage);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+  }
+  ```
+  
