@@ -52,15 +52,13 @@ public class EmailService {
             helper.setSubject("흑곰님입니다.");
 
             // HTML 콘텐츠를 문자열로 작성
-            String htmlContent = "<h1>안녕하세요, 흑곰님입니다!</h1>" +
-                    "<p>!!!! 내용입니다.</p>" +
-                    "<p>HTML 형식의 <strong>이메일</strong>을 보내드립니다.</p>"; // 이미지를 참조하는 HTML 태그
+            String htmlContent = "<img src='cid:logo'>"; // 이미지를 참조하는 HTML 태그
 
             helper.setText(htmlContent, true); // true를 설정하여 HTML 메일로 인식하게 함
 
             // 이미지 파일을 첨부
             ClassPathResource image = new ClassPathResource("static/img/test.jpg");
-            helper.addInline("test.png", image);
+            helper.addInline("logo", image);
 
             javaMailSender.send(mimeMessage);
         } catch (Exception e) {
