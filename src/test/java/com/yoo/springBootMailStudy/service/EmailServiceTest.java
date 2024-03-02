@@ -28,4 +28,10 @@ class EmailServiceTest {
     void mailToHTMLAddFile() {
         emailService.mailSendToHTMLAddFile();
     }
+
+    @Test
+    @DisplayName("HTML Cid 이미지 첨부")
+    void mailToHTMLAddCid() {
+        emailService.mailSendToHTMLAddCid();
+    }
 }
