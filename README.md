@@ -144,4 +144,34 @@
     }
   }
   ```
+
+## 메일 발송 시 발신자명 추가 방법
+- 별거 없다 `MimeMessageHelper` 객체 내 함수애서 setFrom을 통해 설정해주면 된다.
+  - Ex) `setFrom(발신자메일 , 발신자명)`
+- 예시 코드
+  ```java
+  class MailTest{
+     public void mailSendChangeFromName(){
+        try {
+            MimeMessage mimeMessage = javaMailSender.createMimeMessage();
+            MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, "utf-8");
+
+            // 보낸 사람의 이름과 주소 설정
+            helper.setFrom("sender@example.com", "보낸 사람 이름");
+
+            // 받는 사람
+            helper.setTo("edel1212@naver.com");
+            helper.setSubject("메일 제목입니다.");
+
+            String htmlContent = "<h1>발송자명 변경 테스트</h1>";
+
+            helper.setText(htmlContent, true); // true를 설정하여 HTML 메일로 인식하게 함
+
+            javaMailSender.send(mimeMessage);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+  }
+  ```
   

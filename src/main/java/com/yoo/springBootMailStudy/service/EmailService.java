@@ -106,13 +106,11 @@ public class EmailService {
             // 보낸 사람의 이름과 주소 설정
             helper.setFrom("sender@example.com", "보낸 사람 이름");
 
+            // 받는 사람
             helper.setTo("edel1212@naver.com");
-            helper.setSubject("와구와구과구!!!");
+            helper.setSubject("메일 제목입니다.");
 
-            // HTML 콘텐츠를 문자열로 작성
-            String htmlContent = "<h1>안녕하세요, 흑곰님입니다!</h1>" +
-                    "<p>!!!! 내용입니다.</p>" +
-                    "<p>HTML 형식의 <strong>이메일</strong>을 보내드립니다.</p>";
+            String htmlContent = "<h1>발송자명 변경 테스트</h1>";
 
             helper.setText(htmlContent, true); // true를 설정하여 HTML 메일로 인식하게 함
 
