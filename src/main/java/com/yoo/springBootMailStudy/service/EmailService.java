@@ -98,4 +98,28 @@ public class EmailService {
         }
     }
 
+    public void mailSendChangeFromName(){
+        try {
+            MimeMessage mimeMessage = javaMailSender.createMimeMessage();
+            MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, "utf-8");
+
+            // 보낸 사람의 이름과 주소 설정
+            helper.setFrom("sender@example.com", "보낸 사람 이름");
+
+            helper.setTo("edel1212@naver.com");
+            helper.setSubject("와구와구과구!!!");
+
+            // HTML 콘텐츠를 문자열로 작성
+            String htmlContent = "<h1>안녕하세요, 흑곰님입니다!</h1>" +
+                    "<p>!!!! 내용입니다.</p>" +
+                    "<p>HTML 형식의 <strong>이메일</strong>을 보내드립니다.</p>";
+
+            helper.setText(htmlContent, true); // true를 설정하여 HTML 메일로 인식하게 함
+
+            javaMailSender.send(mimeMessage);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
 }

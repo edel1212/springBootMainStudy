@@ -34,4 +34,10 @@ class EmailServiceTest {
     void mailToHTMLAddCid() {
         emailService.mailSendToHTMLAddCid();
     }
+
+    @Test
+    @DisplayName("이메일 발송 - 발신자명 변경")
+    void mailSendChangeFromName() {
+        emailService.mailSendChangeFromName();
+    }
 }
